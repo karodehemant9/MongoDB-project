@@ -11,6 +11,7 @@ class Product {
       this.description = description;
       this.imageUrl = imageUrl;
       this._id = id ? new mongodb.ObjectId(this_id) : null;
+      this.userId = userId;
   }
 
   save()
