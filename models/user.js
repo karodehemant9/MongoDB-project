@@ -118,6 +118,52 @@ class User {
   //       console.log(err);
   //     })
   // }
+
+
+
+
+  addOrder() {
+    const db = getDb();
+
+    return this.getCart().then(products => {
+      const order = {
+        items: products,
+        user: {
+          _id: new mongodb.ObjectId(this._id),
+          name: this.name,
+        }
+      };
+
+      return db
+      .collection('orders')
+      .insertOne(order);
+
+    })
+    .then(result => {
+        this.cart = { items: [] }
+        return db
+          .collection('users')
+          .updateOne(
+            { _id: this._id },
+            { $set: { cart: { items: [] } } }
+          );
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
+
+
+
+
+  getOrders() {
+    const db = getDb();
+    return db.collection('orders').find({ 'user._id': new mongodb.ObjectId(this._id) }).toArray();
+  }
+
+
+
 }
 
 module.exports = User;
