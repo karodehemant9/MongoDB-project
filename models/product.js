@@ -4,13 +4,13 @@ const mongoConnect = require('../util/database').mongoConnect;
 const getDb = require('../util/database').getDb; 
 
 class Product {
-  constructor(title, price, description, imageUrl, id)
+  constructor(title, price, description, imageUrl, id, userId)
   {
       this.title = title;
       this.price = price;
       this.description = description;
       this.imageUrl = imageUrl;
-      this._id = new mongodb.ObjectId(this_id);
+      this._id = id ? new mongodb.ObjectId(this_id) : null;
   }
 
   save()
